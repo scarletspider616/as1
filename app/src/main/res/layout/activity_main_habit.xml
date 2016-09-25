@@ -9,14 +9,6 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.example.jm.joeymich_habittracker.MainHabitActivity">
 
-    <Spinner
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/spinner"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
-        android:spinnerMode="dropdown" />
 
     <Button
         android:layout_width="wrap_content"
@@ -26,5 +18,14 @@
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true" />
+
+    <Button
+        android:text="Change Date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_alignLeft="@+id/newHabit"
+        android:layout_alignStart="@+id/newHabit"
+        android:id="@+id/changeDay" />
 
 </RelativeLayout>

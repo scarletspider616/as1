@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Habit Tracker</string>
+    <string name="app_name">joeymich-HabitTracker</string>
     <string name="edit_message">Enter new habit description...</string>
     <string name="button_send">Submit</string>
 </resources>
