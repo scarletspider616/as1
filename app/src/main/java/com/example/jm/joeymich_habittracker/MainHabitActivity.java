@@ -36,6 +36,8 @@ public class MainHabitActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_habit);
         // check the day of the week:
@@ -48,6 +50,14 @@ public class MainHabitActivity extends AppCompatActivity {
         displayHabits = (ListView) findViewById(R.id.habit_list);
         habitList = new ArrayList<Habit> ();
         habitList.add(new Habit("Clean room", 0, 1, 2, 3, 4, 5, 6));
+        try {
+            Intent nIntent = getIntent();
+            String message = nIntent.getStringExtra("description");
+            habitList.add(new Habit(message, 0));
+
+        } catch (Exception e) {
+            //pass for now
+        }
         habitAdapter = new ArrayAdapter<Habit>(this, android.R.layout.simple_list_item_1,
                 android.R.id.text1, habitList);
 
