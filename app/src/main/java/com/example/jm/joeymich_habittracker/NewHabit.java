@@ -16,14 +16,14 @@ import com.google.android.gms.appindexing.AppIndex;
 import com.google.android.gms.appindexing.Thing;
 import com.google.android.gms.common.api.GoogleApiClient;
 
-public class NewHabit extends AppCompatActivity {
+public class NewHabit extends AppCompatActivity implements ChooseDayDialog.DialogListener {
 
     /**
      * ATTENTION: This was auto-generated to implement the App Indexing API.
      * See https://g.co/AppIndexing/AndroidStudio for more information.
      */
     private GoogleApiClient client;
-
+    private EditText editText;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,13 +34,8 @@ public class NewHabit extends AppCompatActivity {
     }
 
     public void createNewHabit(View view) {
-        EditText editText = (EditText) findViewById(R.id.edit_message);
-        String message = editText.getText().toString();
+        editText = (EditText) findViewById(R.id.edit_message);
         this.showNoticeDialog();
-
-        Intent newIntent = new Intent(this, MainHabitActivity.class);
-        newIntent.putExtra("description", message);
-//        startActivity(newIntent);
     }
 
     /**
@@ -81,7 +76,22 @@ public class NewHabit extends AppCompatActivity {
 
     public void showNoticeDialog() {
         DialogFragment newFragment = new ChooseDayDialog();
-        newFragment.show(getSupportFragmentManager(), "Choose Day");
+        ArrayList savedData = newFragment.show(getSupportFragmentManager(), "Choose Day");
+
+    }
+    // following is taken from https://developer.android.com/guide/topics/ui/dialogs.html#AlertDialog
+    @Override
+    public void onDialogPositiveClick(DialogFragment dialog) {
+//        String message = editText.getText().toString();
+//
+//        Intent newIntent = new Intent(this, MainHabitActivity.class);
+//        newIntent.putExtra("description", message);
+//        startActivity(newIntent);
+
+
+    }
+    @Override
+    public void onDialogNegativeClick(DialogFragment dialog) {
 
     }
 }
