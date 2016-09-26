@@ -11,6 +11,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Spinner;
+import android.widget.TextView;
 
 import com.google.android.gms.appindexing.Action;
 import com.google.android.gms.appindexing.AppIndex;
@@ -18,6 +19,7 @@ import com.google.android.gms.appindexing.Thing;
 import com.google.android.gms.common.api.GoogleApiClient;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 
 import static android.app.PendingIntent.getActivity;
@@ -29,23 +31,30 @@ public class MainHabitActivity extends AppCompatActivity {
     private Button newHabit;
     private ArrayList<Habit> habitList;
     private ArrayAdapter<Habit> habitAdapter;
-    /**
-     * ATTENTION: This was auto-generated to implement the App Indexing API.
-     * See https://g.co/AppIndexing/AndroidStudio for more information.
-     */
-    private GoogleApiClient client;
+    private Integer currDay;
+    private ListView displayHabits;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_habit);
+        // check the day of the week:
+        // http://stackoverflow.com/questions/5574673/what-is-the-easiest-way-to-get-the-current-day-of-the-week-in-android
+        Integer day = Calendar.getInstance().get(Calendar.DAY_OF_WEEK) - 1; // 0 = Sunday
+        TextView currDate = (TextView) findViewById(R.id.currDateText);
 
-        this.daysList = new String[]{"Sunday", "Monday", "Tuesday", "Wednesday", "Thursday",
-                "Friday", "Saturday"};
-//        Spinner dayChoice = (Spinner) findViewById(R.id.spinner);
-//        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
-//                android.R.layout.simple_spinner_item, daysList);
-//        dayChoice.setAdapter(adapter);
+
+        currDate.setText(this.convertToDayString(day));
+        displayHabits = (ListView) findViewById(R.id.habit_list);
+        habitList = new ArrayList<Habit> ();
+        habitList.add(new Habit("Clean room", 0, 1, 2, 3, 4, 5, 6));
+        habitAdapter = new ArrayAdapter<Habit>(this, android.R.layout.simple_list_item_1,
+                android.R.id.text1, habitList);
+
+        displayHabits.setAdapter(habitAdapter);
+        // create some fake habits for testing
+
+//        habitAdapter.notifyDataSetChanged();
 
         // create new habit button.
         newHabit = (Button) findViewById(R.id.newHabit);
@@ -59,5 +68,33 @@ public class MainHabitActivity extends AppCompatActivity {
 
             }
         });
+
+
+
+
+
+    }
+    private String convertToDayString(int dayOfWeek) {
+        if (dayOfWeek == 0) {
+            return "Sunday";
+        }
+        else if (dayOfWeek == 1) {
+            return "Monday";
+        }
+        else if (dayOfWeek == 2) {
+            return "Tuesday";
+        }
+        else if (dayOfWeek == 3) {
+            return "Wednesday";
+        }
+        else if (dayOfWeek == 4) {
+            return "Thursday";
+        }
+        else if (dayOfWeek == 5) {
+            return "Friday";
+        }
+        else {
+            return "Saturday";
+        }
     }
 }

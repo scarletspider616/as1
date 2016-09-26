@@ -10,38 +10,28 @@ import java.util.Date;
 public class Habit {
     private Date dateEntered;
     private String name;
-    private ArrayList<Boolean> daysToCompleteOn; // sunday = 0, saturday = 6 (index)
+    private Boolean [] daysToCompleteOn;
     private ArrayList<Completion> completes;
 
-    public Habit (Date date, String name, Integer... toCompleteOn) throws dayNotInWeekException {
-        this.dateEntered = date;
+    public Habit (String name, Integer... toCompleteOn) {
+        this.dateEntered = new Date();
         this.name = name;
         completes = new ArrayList<Completion>();
+        this.daysToCompleteOn = new Boolean[7];
+
         this.populateDaysToCompleteOn(this.daysToCompleteOn);
 
-        for (Integer day: toCompleteOn) {
-            // make sure the day is in the working week
-            if (day < 0) {
-                throw new dayNotInWeekException("This day is not in a working week!");
-            }
-            else if (day > 6) {
-                throw new dayNotInWeekException("This day is not in a working week!");
-            }
-            this.daysToCompleteOn.set(day, true);
+        for (int day = 0; day < toCompleteOn.length; day++) {
+            this.daysToCompleteOn[day] = Boolean.TRUE;
         }
     }
 
-    private void populateDaysToCompleteOn(ArrayList<Boolean> daysList) {
+    private void populateDaysToCompleteOn(Boolean [] daysList) {
         for (int i = 0; i < 7; i++) {
-            daysList.add(false);
+            daysList[i] = Boolean.FALSE;
         }
     }
     // setters
-    public void addDaysToCompleteOn (Integer... toCompleteOn) {
-        for (Integer day: toCompleteOn) {
-
-        }
-    }
     public void changeMessage (String name) {
         this.name = name;
     }
@@ -59,11 +49,19 @@ public class Habit {
     public Date getDateEntered () {
         return this.dateEntered;
     }
-    public ArrayList<Boolean> getDaysToCompleteOnList () {
+    public Boolean[] getDaysToCompleteOnList () {
         return this.daysToCompleteOn;
     }
     public ArrayList<Completion> getCompletes () {
         return this.completes;
+    }
+
+    @Override
+    public String toString() {
+        return name;
+    }
+    public Boolean toBeCompletedOn(int day) {
+        return this.daysToCompleteOn[day];
     }
 
 }
