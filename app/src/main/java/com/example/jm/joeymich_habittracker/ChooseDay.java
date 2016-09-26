@@ -6,25 +6,31 @@ import android.os.Bundle;
 import android.widget.Adapter;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.TextView;
 
 public class ChooseDay extends AppCompatActivity {
 
     private ListView daysList;
     private String[] dayStrings;
-    private Adapter dayAdapter;
+    private ArrayAdapter<String> dayAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_choose_day);
         Intent saveDescription = getIntent();
+        TextView message = (TextView) findViewById(R.id.chooseDayMessage);
+        message.setText(R.string.chooseDays);
 
         dayStrings = new String[7];
         this.populateStrings(dayStrings);
         String description = saveDescription.getStringExtra("description");
         daysList = (ListView) findViewById(R.id.days_list);
-        dayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1,
+        daysList.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
+        dayAdapter = new ArrayAdapter<String>(this,
+                android.R.layout.simple_list_item_multiple_choice,
                 android.R.id.text1, this.dayStrings);
+        daysList.setAdapter(dayAdapter);
 
 
 

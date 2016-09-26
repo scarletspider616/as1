@@ -2,6 +2,8 @@
     <string name="app_name">joeymich-HabitTracker</string>
     <string name="edit_message">Enter new habit description...</string>
     <string name="button_send">Submit</string>
+    <string name="chooseDays">On what days should this be completed?</string>
+
 
     <string-array name="days_list">
         <item>Sunday</item>
