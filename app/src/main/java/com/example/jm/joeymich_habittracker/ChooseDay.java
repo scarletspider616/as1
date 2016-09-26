@@ -7,6 +7,7 @@ import android.util.SparseBooleanArray;
 import android.view.View;
 import android.widget.Adapter;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -22,6 +23,7 @@ public class ChooseDay extends AppCompatActivity {
     private String[] dayStrings;
     private ArrayAdapter<String> dayAdapter;
     private String description;
+    private ArrayList<Integer> daysSelected;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,18 +45,26 @@ public class ChooseDay extends AppCompatActivity {
                 android.R.id.text1, this.dayStrings);
         daysList.setAdapter(dayAdapter);
 
+        // create new habit button.
+        Button submitButton = (Button) findViewById(R.id.confirm);
+        submitButton.setOnClickListener(new View.OnClickListener() {
 
+            public void onClick(View v) {
+                setResult(RESULT_OK);
+                headBackToMainScreen();
 
-    }
+            }
+
+    });
 
     public void onClick(View v) {
         // http://theopentutorials.com/tutorials/android/listview/android-multiple-selection-listview/
         SparseBooleanArray checked = daysList.getCheckedItemPositions();
-        ArrayList<Integer> daysSelected = new ArrayList<Integer>();
+       daysSelected = new ArrayList<Integer>();
         for (int i = 0; i < checked.size(); i++) {
             daysSelected.add(i);
         }
-        this.headBackToMainScreen(daysSelected);
+        this.headBackToMainScreen();
     }
 
     private void populateStrings(String[] inStrings) {
@@ -67,9 +77,10 @@ public class ChooseDay extends AppCompatActivity {
         inStrings[6] = "Saturday";
     }
 
-    private void headBackToMainScreen(ArrayList<Integer> daysSelected) {
+    private void headBackToMainScreen() {
         Intent nIntent = new Intent(this, MainHabitActivity.class);
         nIntent.putIntegerArrayListExtra("days", daysSelected);
         nIntent.putExtra("description", description);
+        startActivity(nIntent);
     }
 }
