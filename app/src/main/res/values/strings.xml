@@ -2,4 +2,14 @@
     <string name="app_name">joeymich-HabitTracker</string>
     <string name="edit_message">Enter new habit description...</string>
     <string name="button_send">Submit</string>
+
+    <string-array name="days_list">
+        <item>Sunday</item>
+        <item>Monday</item>
+        <item>Tuesday</item>
+        <item>Wednesday</item>
+        <item>Thursday</item>
+        <item>Friday</item>
+        <item>Saturday</item>
+    </string-array>
 </resources>
