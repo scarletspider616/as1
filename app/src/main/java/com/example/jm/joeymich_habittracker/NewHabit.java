@@ -1,7 +1,10 @@
 package com.example.jm.joeymich_habittracker;
 
+import android.app.Dialog;
+import android.app.DialogFragment;
 import android.content.Intent;
 import android.net.Uri;
+import android.support.v4.app.FragmentActivity;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -12,7 +15,8 @@ import com.google.android.gms.appindexing.AppIndex;
 import com.google.android.gms.appindexing.Thing;
 import com.google.android.gms.common.api.GoogleApiClient;
 
-public class NewHabit extends AppCompatActivity {
+public class NewHabit extends FragmentActivity
+        implements NoticeDialogFragment.NoticeDialogListener {
 
     /**
      * ATTENTION: This was auto-generated to implement the App Indexing API.
@@ -32,6 +36,7 @@ public class NewHabit extends AppCompatActivity {
     public void createNewHabit(View view) {
         EditText editText = (EditText) findViewById(R.id.edit_message);
         String message = editText.getText().toString();
+
         Intent newIntent = new Intent(this, MainHabitActivity.class);
         newIntent.putExtra("description", message);
         startActivity(newIntent);
@@ -71,5 +76,10 @@ public class NewHabit extends AppCompatActivity {
         // See https://g.co/AppIndexing/AndroidStudio for more information.
         AppIndex.AppIndexApi.end(client, getIndexApiAction());
         client.disconnect();
+    }
+
+    public void showNoticeDialog() {
+        DialogFragment dayDialog = new ChooseDayDialog();
+        dayDialog.show(getSupportFragmentManager(), "ChooseDayDialog");
     }
 }
