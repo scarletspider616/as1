@@ -32,7 +32,7 @@ public class NewHabit extends AppCompatActivity {
     public void createNewHabit(View view) {
         EditText editText = (EditText) findViewById(R.id.edit_message);
         String message = editText.getText().toString();
-        Intent newIntent = new Intent(this, MainHabitActivity.class);
+        Intent newIntent = new Intent(this, ChooseDay.class);
         newIntent.putExtra("description", message);
         startActivity(newIntent);
     }

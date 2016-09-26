@@ -17,7 +17,7 @@
         android:layout_alignParentBottom="true"
         android:text="@string/button_send"/>
     <ListView
-        android:id="@+id/daysList"
+        android:id="@+id/days_list"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:layout_above="@id/confirm"
