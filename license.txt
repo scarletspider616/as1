@@ -1,0 +1,13 @@
+joeymich-HabitTracker (c) by Joey-Michael Fallone
+
+joeymich-HabitTracker is licensed under a
+Creative Commons Attribution-ShareAlike 3.0 Unported License.
+
+You should have received a copy of the license along with this
+work.  If not, see <http://creativecommons.org/licenses/by-sa/3.0/>.
+The copy of the license is in this directory titled "legal.txt"
+
+joeymich-HabitTracker makes use of open source code and derivatives
+thereof. Please see the file "license_3rd_party.txt" for these 
+licenses. They are also noted in header files of the source code 
+where used. 

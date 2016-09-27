@@ -1,0 +1,12 @@
+CC-BY-SA:
+
+	This work, "joeymich-HabitTracker," contains a derivative of
+	"Android - How to create clickable listview?" by "Delpes," a stackoverflow user,
+	used under CC-BY-SA by Joey-Michael Fallone.
+	(Available here:
+	http://stackoverflow.com/questions/13281197/android-how-to-create-clickable-listview)
+
+	This work, "joeymich-HabitTracker," contains a derivative of 
+	"Selecting multiple items in List View" by "saber," 
+	a stackoverflow user, used under CC-BY-SA by Joey-Michael Fallone.
+ 	(Available here: http://stackoverflow.com/questions/1362602/selecting-multiple-items-in-listview)
