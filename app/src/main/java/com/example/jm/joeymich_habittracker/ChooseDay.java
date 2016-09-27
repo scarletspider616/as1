@@ -52,6 +52,7 @@ public class ChooseDay extends AppCompatActivity {
 
     public void onClick(View v) {
         // http://theopentutorials.com/tutorials/android/listview/android-multiple-selection-listview/
+        // ^ Please see readme for this "common knowledge" attribution
         SparseBooleanArray checked = daysList.getCheckedItemPositions();
         daysSelected = new ArrayList<Integer>();
         for (int i = 0; i < checked.size(); i++) {

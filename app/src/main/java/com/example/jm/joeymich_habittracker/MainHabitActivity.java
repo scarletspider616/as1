@@ -24,7 +24,17 @@ import java.util.Date;
 
 import static android.app.PendingIntent.getActivity;
 
+/**
+ * This work, "MainHabitActivity," is a derivative of
+ * "Android - How to create clickable listview?" by "Delpes," a stackoverflow user,
+ * used under CC-BY-SA by Joey-Michael Fallone.
+ * (Available here:
+ * http://stackoverflow.com/questions/13281197/android-how-to-create-clickable-listview)
+ *
+*/
 // http://stackoverflow.com/questions/13281197/android-how-to-create-clickable-listview
+
+
 public class MainHabitActivity extends AppCompatActivity {
     private String[] daysList;
     private Button newHabit;
