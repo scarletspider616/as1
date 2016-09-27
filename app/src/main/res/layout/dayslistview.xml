@@ -1,4 +1,14 @@
-<ListView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/days_list"
+<!--* This work, "ChooseDay," is a derivative of "Selecting multiple items in List View" by-->
+<!--* "saber," a stackoverflow user, used under CC-BY-SA by Joey-Michael Fallone.-->
+<!--* (Available here:
+http://stackoverflow.com/questions/1362602/selecting-multiple-items-in-listview)-->
+<CheckedTextView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
     android:layout_width="fill_parent"
-    android:layout_height="fill_parent" />
+    android:layout_height="?android:attr/listPreferredItemHeight"
+    android:textAppearance="?android:attr/textAppearanceLarge"
+    android:gravity="center_vertical"
+    android:paddingLeft="6dip"
+    android:paddingRight="6dip"
+    android:checkMark="?android:attr/listChoiceIndicatorMultiple"/>

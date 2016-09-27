@@ -26,7 +26,6 @@ import static android.app.PendingIntent.getActivity;
 
 // http://stackoverflow.com/questions/13281197/android-how-to-create-clickable-listview
 public class MainHabitActivity extends AppCompatActivity {
-    // http://stackoverflow.com/questions/5241660/how-can-i-add-items-to-a-spinner-in-android
     private String[] daysList;
     private Button newHabit;
     private ArrayList<Habit> habitList;

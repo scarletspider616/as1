@@ -14,7 +14,10 @@ import android.widget.TextView;
 import java.util.ArrayList;
 
 /**
-http://theopentutorials.com/tutorials/android/listview/android-multiple-selection-listview/
+ * This work, "ChooseDay," is a derivative of "Selecting multiple items in List View" by
+ * "saber," a stackoverflow user, used under CC-BY-SA by Joey-Michael Fallone.
+ * (Available here: http://stackoverflow.com/questions/1362602/selecting-multiple-items-in-listview)
+ *
  */
 
 public class ChooseDay extends AppCompatActivity {
@@ -37,34 +40,25 @@ public class ChooseDay extends AppCompatActivity {
 
         dayStrings = new String[7];
         this.populateStrings(dayStrings);
-        String description = saveDescription.getStringExtra("description");
         daysList = (ListView) findViewById(R.id.days_list);
         daysList.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
+        daysList.setItemsCanFocus(false);
         dayAdapter = new ArrayAdapter<String>(this,
                 android.R.layout.simple_list_item_multiple_choice,
                 android.R.id.text1, this.dayStrings);
         daysList.setAdapter(dayAdapter);
 
-        // create new habit button.
-        Button submitButton = (Button) findViewById(R.id.confirm);
-        submitButton.setOnClickListener(new View.OnClickListener() {
-
-            public void onClick(View v) {
-                setResult(RESULT_OK);
-                headBackToMainScreen();
-
-            }
-
-    });
+    }
 
     public void onClick(View v) {
         // http://theopentutorials.com/tutorials/android/listview/android-multiple-selection-listview/
         SparseBooleanArray checked = daysList.getCheckedItemPositions();
-       daysSelected = new ArrayList<Integer>();
+        daysSelected = new ArrayList<Integer>();
         for (int i = 0; i < checked.size(); i++) {
-            daysSelected.add(i);
+            if (checked.get(i) == (Boolean.TRUE)) {
+                daysSelected.add(i);
+            }
         }
-        this.headBackToMainScreen();
     }
 
     private void populateStrings(String[] inStrings) {
@@ -77,8 +71,8 @@ public class ChooseDay extends AppCompatActivity {
         inStrings[6] = "Saturday";
     }
 
-    private void headBackToMainScreen() {
-        Intent nIntent = new Intent(this, MainHabitActivity.class);
+    public void headBackToMainScreen(View v) {
+        Intent nIntent = new Intent(v.getContext(), MainHabitActivity.class);
         nIntent.putIntegerArrayListExtra("days", daysSelected);
         nIntent.putExtra("description", description);
         startActivity(nIntent);
