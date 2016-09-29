@@ -92,7 +92,7 @@ public class MainHabitActivity extends AppCompatActivity {
             String message = nIntent.getStringExtra("description");
             if (message != null) {
                 habitList.add(new Habit(message, 0));
-                updateFile();
+                saveInFile();
             }
 
         } catch (Exception e) {
@@ -147,91 +147,9 @@ public class MainHabitActivity extends AppCompatActivity {
     }
 
 
-//    private ArrayList<Habit> loadFromFile() {
-//        /**
-//         * This work, "loadFromFile," is a derivative of examples from
-//         * "Saving Files" by "Delpes," used under Apache 2.0 by Joey-Michael Fallone.
-//         * (Available here:
-//         * https://developer.android.com/training/basics/data-storage/files.html)
-//         *
-//         */
-//        ArrayList<Habit> temp = new ArrayList<Habit>();
-//
-//        try {
-//            InputStream inRead = openFileInput(filename);
-//            temp = this.dumpData(inRead);
-//            inRead.close();
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
-//        return temp;
-//    }
-
-    private ArrayList<Habit> dumpData(InputStream inData) {
-        /**
-         * This work, "dumpData," is a derivative of
-         * "Read String line by line in Java" by "notnoop," and edited by "gregko, "
-         * both stack overflow users, used under CC-BY-SA by Joey-Michael Fallone.
-         * (Available here:
-         * http://stackoverflow.com/questions/1096621/read-string-line-by-line-in-java)
-         *
-         */
-
-        // THIS IS THE BUG I FOUND THE DAMN BUG ITS HERE BATTERY ABOUT TO DIE
-        ArrayList<String> strings = new ArrayList<String>();
-        ArrayList<Habit> nList = new ArrayList<Habit>();
-            BufferedReader in = new BufferedReader(new InputStreamReader(inData));
-            try {
-                String line = in.readLine();
-                while (line != null) {
-                    strings.add(line);
-                    line = in.readLine();
-                }
-            } catch (Exception e) {
-                //pas
-            }
-
-            // now update habitList
-            for (String string: strings) {
-                nList.add(converter.fromJson(string, Habit.class));
-        }
-        return nList;
-    }
-
-    private void updateFile() {
-        /**
-         * This work, "updateFile," is a derivative of examples from
-         * "Saving Files" by "Delpes," used under Apache 2.0 by Joey-Michael Fallone.
-         * (Available here:
-         * https://developer.android.com/training/basics/data-storage/files.html)
-         *
-         */
-
-        deleteFile(filename);
-        OutputStream outWrite = null;
-        try {
-            outWrite = openFileOutput(filename, Context.MODE_PRIVATE);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        for (Habit habit: this.habitList) {
-            String tempConverted = converter.toJson(habit);
-            try {
-                outWrite.write(tempConverted.getBytes());
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
-        try {
-            outWrite.close();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
     public void addHabit(Habit habit) {
         this.habitList.add(habit);
-        this.updateFile();
+        this.saveInFile();
     }
 
     public ArrayList<Habit> getHabitList() {
@@ -242,19 +160,9 @@ public class MainHabitActivity extends AppCompatActivity {
 
         return this.habitList;
     }
+    
 
-//    public ArrayList<Habit> getSaveString() {
-//        String result = "";
-//        try {
-//            InputStream inRead = this.context.openFileInput(filename);
-//            result = dumpData(inRead);
-//        } catch (Exception e) {
-//            // pass
-//        }
-//        this.habitList = new ArrayList<Habit>();
-//        this.habitList.add(new Habit(result, 0));
-//        return this.habitList;
-//    }
+    // the following two methods were taken from lonelyTwitter class code
     private void loadFromFile() {
         try {
             FileInputStream fis = openFileInput(this.filename);
