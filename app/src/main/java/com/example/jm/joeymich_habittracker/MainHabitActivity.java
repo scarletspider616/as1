@@ -42,7 +42,8 @@ import static android.app.PendingIntent.getActivity;
 // http://stackoverflow.com/questions/13281197/android-how-to-create-clickable-listview
 
 
-public class MainHabitActivity extends AppCompatActivity {
+public class MainHabitActivity extends AppCompatActivity
+        implements ClickListItemFragment.ClickListDialogListener{
     private String[] daysList;
     private Button newHabit;
     private ArrayAdapter<Habit> habitAdapter;
@@ -120,6 +121,23 @@ public class MainHabitActivity extends AppCompatActivity {
             }
         });
 
+    }
+    // api taken from https://developer.android.com/guide/topics/ui/dialogs.html
+    // (should it be licensed here again???)
+    @Override
+    public void onDetailClick(DialogFragment dialog) {
+
+    }
+
+    @Override
+    public void onCancelClick(DialogFragment dialog) {
+        // User touched the dialog's negative button
+        
+    }
+
+    @Override
+    public void onCompletionClick(DialogFragment dialog) {
+        // fill this
     }
     private String convertToDayString(int dayOfWeek) {
         if (dayOfWeek == 0) {
