@@ -38,10 +38,10 @@ import static android.app.PendingIntent.getActivity;
 public class MainHabitActivity extends AppCompatActivity {
     private String[] daysList;
     private Button newHabit;
-    private ArrayList<Habit> habitList;
     private ArrayAdapter<Habit> habitAdapter;
     private Integer currDay;
     private ListView displayHabits;
+    private FileManager fileManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,24 +49,34 @@ public class MainHabitActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_habit);
         // check the day of the week:
+
+        fileManager = new FileManager(getApplicationContext());
+        // ^ common knowledge attribution (see readme)
+        // http://stackoverflow.com/questions/4721626/how-to-get-the-current-context
+
+        this.displayHabits();
+
+    }
+
+    private void displayHabits() {
         // http://stackoverflow.com/questions/5574673/what-is-the-easiest-way-to-get-the-current-day-of-the-week-in-android
         Integer day = Calendar.getInstance().get(Calendar.DAY_OF_WEEK) - 1; // 0 = Sunday
         TextView currDate = (TextView) findViewById(R.id.currDateText);
 
-
         currDate.setText(this.convertToDayString(day));
         displayHabits = (ListView) findViewById(R.id.habit_list);
-        habitList = new ArrayList<Habit> ();
+
         try {
             Intent nIntent = getIntent();
             String message = nIntent.getStringExtra("description");
-            habitList.add(new Habit(message, 0));
+            fileManager.addHabit(new Habit(message, 0));
 
         } catch (Exception e) {
-            //pass for now
+            e.printStackTrace();
         }
+
         habitAdapter = new ArrayAdapter<Habit>(this, android.R.layout.simple_list_item_1,
-                android.R.id.text1, habitList);
+                android.R.id.text1, fileManager.getHabitList());
 
         displayHabits.setAdapter(habitAdapter);
         // create some fake habits for testing
@@ -85,10 +95,6 @@ public class MainHabitActivity extends AppCompatActivity {
 
             }
         });
-
-
-
-
 
     }
     private String convertToDayString(int dayOfWeek) {
