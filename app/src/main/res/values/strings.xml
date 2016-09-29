@@ -5,6 +5,8 @@
     <string name="chooseDays">On what days should this be completed?</string>
     <string name="cancel">Cancel</string>
     <string name="prompt">What would you like to do?</string>
+    <string name="completion">Complete</string>
+    <string name="details">Details</string>
 
 
     <string-array name="days_list">
