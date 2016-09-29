@@ -110,8 +110,12 @@ public class FileManager {
     }
 
     public ArrayList<Habit> getHabitList() {
+//        return this.habitList;
+//        String size = new Integer(habitList.size()).toString();
+//        habitList.clear();
+//        habitList.add(new Habit(size, 0));
+
         return this.habitList;
-//        return this.getSaveString();
     }
 
 //    public ArrayList<Habit> getSaveString() {
