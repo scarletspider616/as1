@@ -1,9 +1,14 @@
 package com.example.jm.joeymich_habittracker;
 
 import android.app.Activity;
+import android.app.Dialog;
+import android.app.DialogFragment;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.app.FragmentManager;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.AdapterView;
@@ -32,6 +37,8 @@ import static android.app.PendingIntent.getActivity;
  * http://stackoverflow.com/questions/13281197/android-how-to-create-clickable-listview)
  *
 */
+
+
 // http://stackoverflow.com/questions/13281197/android-how-to-create-clickable-listview
 
 
@@ -58,6 +65,14 @@ public class MainHabitActivity extends AppCompatActivity {
 
     }
 
+    public void onItemClick(AdapterView<?> l, View v, int position, long id) {
+        ClickListItemFragment dialog = new ClickListItemFragment();
+        FragmentManager fm = getFragmentManager();
+        finish();
+        System.exit(0);
+        dialog.show(fm, "onItemClick");
+    }
+
     private void displayHabits() {
         // http://stackoverflow.com/questions/5574673/what-is-the-easiest-way-to-get-the-current-day-of-the-week-in-android
         Integer day = Calendar.getInstance().get(Calendar.DAY_OF_WEEK) - 1; // 0 = Sunday
@@ -65,6 +80,13 @@ public class MainHabitActivity extends AppCompatActivity {
 
         currDate.setText(this.convertToDayString(day));
         displayHabits = (ListView) findViewById(R.id.habit_list);
+        displayHabits.setOnItemClickListener(new AdapterView.OnItemClickListener()  {
+            public void onItemClick(AdapterView<?> l, View v, int position, long id) {
+                ClickListItemFragment dialog = new ClickListItemFragment();
+                FragmentManager fm = getFragmentManager();
+                dialog.show(fm, "onItemClick");
+            }
+        });
 
         try {
             fileManager = new FileManager(getApplicationContext());
@@ -75,6 +97,7 @@ public class MainHabitActivity extends AppCompatActivity {
         } catch (Exception e) {
             e.printStackTrace();
         }
+        ArrayList<Habit> temp = fileManager.getHabitList();
 
         habitAdapter = new ArrayAdapter<Habit>(this, android.R.layout.simple_list_item_1,
                 android.R.id.text1, fileManager.getHabitList());

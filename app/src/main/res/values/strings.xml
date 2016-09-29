@@ -3,6 +3,8 @@
     <string name="edit_message">Enter new habit description...</string>
     <string name="button_send">Submit</string>
     <string name="chooseDays">On what days should this be completed?</string>
+    <string name="cancel">Cancel</string>
+    <string name="prompt">What would you like to do?</string>
 
 
     <string-array name="days_list">

@@ -121,6 +121,20 @@ public class FileManager {
         saveInFile();
     }
 
+    private void cleanup() {
+        for (Habit habit: habitList) {
+            if (habit.getMessage() == null) {
+                this.deleteHabit(habit.getMessage());
+            }
+            else if(habit.getMessage().equals("")) {
+                this.deleteHabit(habit.getMessage());
+            }
+            else if(habit.getMessage().equals("null")) {
+                this.deleteHabit(habit.getMessage());
+            }
+        }
+    }
+
     // the following two methods were taken from lonelyTwitter class code
     private void loadFromFile() {
         try {
@@ -134,14 +148,17 @@ public class FileManager {
             }.getType();
 
             this.habitList = gson.fromJson(in, listType);
+            this.cleanup();
 
         } catch (Exception e) {
             // TODO Auto-generated catch block
             this.habitList = new ArrayList<Habit>();
+            this.cleanup();
         }
     }
 
     private void saveInFile() {
+        this.cleanup();
         try {
             FileOutputStream fos = this.context.openFileOutput(this.filename,
                     0);
