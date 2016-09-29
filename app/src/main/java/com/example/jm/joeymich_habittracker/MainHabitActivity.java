@@ -20,6 +20,7 @@ import com.google.android.gms.appindexing.Thing;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.gson.Gson;
 
+import java.io.BufferedReader;
 import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -171,11 +172,16 @@ public class MainHabitActivity extends AppCompatActivity {
 
         // THIS IS THE BUG I FOUND THE DAMN BUG ITS HERE BATTERY ABOUT TO DIE
         ArrayList<String> strings = new ArrayList<String>();
-        Scanner scanner = new Scanner(new InputStreamReader(inData));
-        while (scanner.hasNextLine()) {
-            strings.add(scanner.nextLine());
+        BufferedReader in = new BufferedReader(new InputStreamReader(inData));
+        try {
+            String line = in.readLine();
+            while (line != null) {
+                strings.add(line);
+                line = in.readLine();
+            }
+        } catch (Exception e) {
+            //pas
         }
-        scanner.close();
 
         // now update habitList
         for (String string: strings) {
