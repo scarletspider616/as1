@@ -1,4 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!--https://developer.android.com/reference/android/widget/Button.html-->
+<!--onClick xml attribute instead of making onClick listener manually from the above url-->
+<!--("common knowledge")-->
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
