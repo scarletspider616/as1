@@ -1,3 +1,9 @@
+Copies all licenses are included in the dir "legal," with the exception of CC-BY-SA which can be 
+found in the project root dir under "legal.txt." 
+
+Note that all attributions can also be found in the code heading the area where they are used.
+
+
 CC-BY-SA:
 
 	This work, "joeymich-HabitTracker," contains a derivative of
@@ -10,3 +16,15 @@ CC-BY-SA:
 	"Selecting multiple items in List View" by "saber," 
 	a stackoverflow user, used under CC-BY-SA by Joey-Michael Fallone.
  	(Available here: http://stackoverflow.com/questions/1362602/selecting-multiple-items-in-listview)
+
+Apache 2.0: 
+
+    This work, "loadFromFile," is a derivative of examples from
+    "Saving Files" used under Apache 2.0 by Joey-Michael Fallone.
+    (Available here:
+    https://developer.android.com/training/basics/data-storage/files.html)
+
+    This work, "updateFile," is a derivative of examples from
+    "Saving Files" used under Apache 2.0 by Joey-Michael Fallone.
+    (Available here:
+    https://developer.android.com/training/basics/data-storage/files.html)

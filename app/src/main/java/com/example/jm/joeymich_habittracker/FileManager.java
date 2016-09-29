@@ -2,6 +2,19 @@ package com.example.jm.joeymich_habittracker;
 
 import android.content.Context;
 
+import animport android.content.Context;
+
+import com.google.gson.Gson;
+
+import java.io.FileOutputStream;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.util.ArrayList;
+import java.util.Scanner;
+droid.content.Context;
+import java.io.BufferedReader;
+
 import com.google.gson.Gson;
 
 import java.io.FileOutputStream;
@@ -53,17 +66,14 @@ public class FileManager {
 
     private void dumpData(InputStream inData) {
         /**
-         * This work, "dumpData," is a derivative of
-         * "Read String line by line in Java" by "notnoop," and edited by "gregko, "
-         * both stack overflow users, used under CC-BY-SA by Joey-Michael Fallone.
-         * (Available here:
-         * http://stackoverflow.com/questions/1096621/read-string-line-by-line-in-java)
+         * This common knowledge process is attributed to lonelyTwitter.
          *
          */
         ArrayList<String> strings = new ArrayList<String>();
-        Scanner scanner = new Scanner(new InputStreamReader(inData));
-        while (scanner.hasNextLine()) {
-            strings.add(scanner.nextLine());
+        BufferedReader inBuff = new BufferedReader(new InputStreamReader(inData));
+
+        while (inBuff.hasNextLine()) {
+            strings.add(inBuff.nextLine());
         }
         scanner.close();
 
