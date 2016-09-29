@@ -2,17 +2,19 @@ package com.example.jm.joeymich_habittracker;
 
 import android.content.Context;
 
-import animport android.content.Context;
+import android.content.Context;
+import android.util.Log;
 
 import com.google.gson.Gson;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.util.ArrayList;
-import java.util.Scanner;
-droid.content.Context;
 import java.io.BufferedReader;
 
 import com.google.gson.Gson;
@@ -22,6 +24,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Scanner;
 
 
@@ -45,24 +48,24 @@ public class FileManager {
         loadFromFile();
     }
 
-    private void loadFromFile() {
-        /**
-            * This work, "loadFromFile," is a derivative of examples from
-            * "Saving Files" by "Delpes," used under Apache 2.0 by Joey-Michael Fallone.
-            * (Available here:
-            * https://developer.android.com/training/basics/data-storage/files.html)
-            *
-        */
-
-        try {
-            InputStream inRead = this.context.openFileInput(filename);
-            this.dumpData(inRead);
-            inRead.close();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-    }
+//    private void loadFromFile() {
+//        /**
+//            * This work, "loadFromFile," is a derivative of examples from
+//            * "Saving Files" by "Delpes," used under Apache 2.0 by Joey-Michael Fallone.
+//            * (Available here:
+//            * https://developer.android.com/training/basics/data-storage/files.html)
+//            *
+//        */
+//
+//        try {
+//            InputStream inRead = this.context.openFileInput(filename);
+//            this.dumpData(inRead);
+//            inRead.close();
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//
+//    }
 
     private void dumpData(InputStream inData) {
         /**
@@ -71,11 +74,16 @@ public class FileManager {
          */
         ArrayList<String> strings = new ArrayList<String>();
         BufferedReader inBuff = new BufferedReader(new InputStreamReader(inData));
-
-        while (inBuff.hasNextLine()) {
-            strings.add(inBuff.nextLine());
+        try {
+            String line = inBuff.readLine();
+            while (line != null) {
+                strings.add(line);
+                line = inBuff.readLine();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
-        scanner.close();
+
 
         // now update habitList
         for (String string: strings) {
@@ -126,6 +134,33 @@ public class FileManager {
 //        habitList.add(new Habit(size, 0));
 
         return this.habitList;
+    }
+
+    private ArrayList<String> loadFromFile() {
+        ArrayList<String> strings = new ArrayList<String>();
+        try {
+            FileInputStream fis = this.context.openFileInput(this.filename);
+            BufferedReader in = new BufferedReader(new InputStreamReader(fis));
+            String line = in.readLine();
+            while (line != null) {
+                strings.add(line);
+                line = in.readLine();
+            }
+
+        } catch (FileNotFoundException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        return strings;
+
+    }
+
+    private void updateList() {
+        ArrayList<String> strings = this.loadFromFile();
+
     }
 
 //    public ArrayList<Habit> getSaveString() {
