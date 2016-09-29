@@ -1,3 +1,12 @@
+**** THIS BRANCH IS USED FOR TESTING PURPOSES ONLY ****
+**** DO NOT COMPILE FROM THIS BRANCH               ****
+DETAILS: 
+	This branch will combine the FileManager class into the MainHabitActivity class to better
+	debug the issues found in the first class. Once the problem is fixed, the main branch will 
+	be updated with the changes TO THE FILEMANAGER CLASS
+
+
+
 Attributions (Common Knowledge):
 	As per forum discussion, sources where "common knowlege" was gained are listed here. 
 	Places in the code where these things were used are also commented with the links
