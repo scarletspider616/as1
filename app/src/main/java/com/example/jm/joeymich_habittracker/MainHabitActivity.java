@@ -14,13 +14,19 @@ import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import java.io.BufferedWriter;
+import java.io.OutputStreamWriter;
+import java.lang.reflect.Type;
+
 import com.google.android.gms.appindexing.Action;
 import com.google.android.gms.appindexing.AppIndex;
 import com.google.android.gms.appindexing.Thing;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
 import java.io.BufferedReader;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -63,9 +69,8 @@ public class MainHabitActivity extends AppCompatActivity {
         // check the day of the week:
 
 //        fileManager = new FileManager(getApplicationContext());
-        this.habitList = new ArrayList<Habit>();
-        converter = new Gson();
         loadFromFile();
+        this.converter = new Gson();
         // ^ common knowledge attribution (see readme)
         // http://stackoverflow.com/questions/4721626/how-to-get-the-current-context
 
@@ -82,16 +87,17 @@ public class MainHabitActivity extends AppCompatActivity {
         displayHabits = (ListView) findViewById(R.id.habit_list);
 
         try {
+            loadFromFile();
             Intent nIntent = getIntent();
             String message = nIntent.getStringExtra("description");
             if (message != null) {
                 habitList.add(new Habit(message, 0));
+                updateFile();
             }
 
         } catch (Exception e) {
             e.printStackTrace();
         }
-        updateFile();
 //        ArrayList<Habit> temp = this.habitLIst();
 
         habitAdapter = new ArrayAdapter<Habit>(this, android.R.layout.simple_list_item_1,
@@ -141,26 +147,27 @@ public class MainHabitActivity extends AppCompatActivity {
     }
 
 
-    private void loadFromFile() {
-        /**
-         * This work, "loadFromFile," is a derivative of examples from
-         * "Saving Files" by "Delpes," used under Apache 2.0 by Joey-Michael Fallone.
-         * (Available here:
-         * https://developer.android.com/training/basics/data-storage/files.html)
-         *
-         */
+//    private ArrayList<Habit> loadFromFile() {
+//        /**
+//         * This work, "loadFromFile," is a derivative of examples from
+//         * "Saving Files" by "Delpes," used under Apache 2.0 by Joey-Michael Fallone.
+//         * (Available here:
+//         * https://developer.android.com/training/basics/data-storage/files.html)
+//         *
+//         */
+//        ArrayList<Habit> temp = new ArrayList<Habit>();
+//
+//        try {
+//            InputStream inRead = openFileInput(filename);
+//            temp = this.dumpData(inRead);
+//            inRead.close();
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//        return temp;
+//    }
 
-        try {
-            InputStream inRead = openFileInput(filename);
-            this.dumpData(inRead);
-            inRead.close();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-    }
-
-    private void dumpData(InputStream inData) {
+    private ArrayList<Habit> dumpData(InputStream inData) {
         /**
          * This work, "dumpData," is a derivative of
          * "Read String line by line in Java" by "notnoop," and edited by "gregko, "
@@ -172,22 +179,23 @@ public class MainHabitActivity extends AppCompatActivity {
 
         // THIS IS THE BUG I FOUND THE DAMN BUG ITS HERE BATTERY ABOUT TO DIE
         ArrayList<String> strings = new ArrayList<String>();
-        BufferedReader in = new BufferedReader(new InputStreamReader(inData));
-        try {
-            String line = in.readLine();
-            while (line != null) {
-                strings.add(line);
-                line = in.readLine();
+        ArrayList<Habit> nList = new ArrayList<Habit>();
+            BufferedReader in = new BufferedReader(new InputStreamReader(inData));
+            try {
+                String line = in.readLine();
+                while (line != null) {
+                    strings.add(line);
+                    line = in.readLine();
+                }
+            } catch (Exception e) {
+                //pas
             }
-        } catch (Exception e) {
-            //pas
-        }
 
-        // now update habitList
-        for (String string: strings) {
-            Habit temp = converter.fromJson(string, Habit.class);
-            this.habitList.add(converter.fromJson(string, Habit.class));
+            // now update habitList
+            for (String string: strings) {
+                nList.add(converter.fromJson(string, Habit.class));
         }
+        return nList;
     }
 
     private void updateFile() {
@@ -247,5 +255,40 @@ public class MainHabitActivity extends AppCompatActivity {
 //        this.habitList.add(new Habit(result, 0));
 //        return this.habitList;
 //    }
+    private void loadFromFile() {
+        try {
+            FileInputStream fis = openFileInput(this.filename);
+            BufferedReader in = new BufferedReader(new InputStreamReader(fis));
 
+            Gson gson = new Gson();
+
+            // Code from http://stackoverflow.com/questions/12384064/gson-convert-from-json-to-a-typed-arraylistt
+            Type listType = new TypeToken<ArrayList<Habit>>() {
+            }.getType();
+
+            this.habitList = gson.fromJson(in, listType);
+
+        } catch (Exception e) {
+            // TODO Auto-generated catch block
+            this.habitList = new ArrayList<Habit>();
+        }
+    }
+
+    private void saveInFile() {
+        try {
+            FileOutputStream fos = openFileOutput(this.filename,
+                    0);
+
+            BufferedWriter out = new BufferedWriter(new OutputStreamWriter(fos));
+
+            Gson gson = new Gson();
+            gson.toJson(this.habitList, out);
+            out.flush();
+
+            fos.close();
+        } catch (Exception e) {
+            // TODO Auto-generated catch block
+            throw new RuntimeException();
+        }
+    }
 }
