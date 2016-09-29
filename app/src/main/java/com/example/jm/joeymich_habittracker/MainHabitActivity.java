@@ -53,7 +53,6 @@ public class MainHabitActivity extends AppCompatActivity {
     private ArrayAdapter<Habit> habitAdapter;
     private Integer currDay;
     private ListView displayHabits;
-    private FileManager fileManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,7 +61,10 @@ public class MainHabitActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main_habit);
         // check the day of the week:
 
-        fileManager = new FileManager(getApplicationContext());
+//        fileManager = new FileManager(getApplicationContext());
+        this.habitList = new ArrayList<Habit>();
+        converter = new Gson();
+        loadFromFile();
         // ^ common knowledge attribution (see readme)
         // http://stackoverflow.com/questions/4721626/how-to-get-the-current-context
 
@@ -81,15 +83,18 @@ public class MainHabitActivity extends AppCompatActivity {
         try {
             Intent nIntent = getIntent();
             String message = nIntent.getStringExtra("description");
-            fileManager.addHabit(new Habit(message, 0));
+            if (message != null) {
+                habitList.add(new Habit(message, 0));
+            }
 
         } catch (Exception e) {
             e.printStackTrace();
         }
-        ArrayList<Habit> temp = fileManager.getHabitList();
+        updateFile();
+//        ArrayList<Habit> temp = this.habitLIst();
 
         habitAdapter = new ArrayAdapter<Habit>(this, android.R.layout.simple_list_item_1,
-                android.R.id.text1, fileManager.getHabitList());
+                android.R.id.text1, this.habitList);
 
         displayHabits.setAdapter(habitAdapter);
         // create some fake habits for testing
@@ -163,6 +168,8 @@ public class MainHabitActivity extends AppCompatActivity {
          * http://stackoverflow.com/questions/1096621/read-string-line-by-line-in-java)
          *
          */
+
+        // THIS IS THE BUG I FOUND THE DAMN BUG ITS HERE BATTERY ABOUT TO DIE
         ArrayList<String> strings = new ArrayList<String>();
         Scanner scanner = new Scanner(new InputStreamReader(inData));
         while (scanner.hasNextLine()) {
@@ -172,6 +179,7 @@ public class MainHabitActivity extends AppCompatActivity {
 
         // now update habitList
         for (String string: strings) {
+            Habit temp = converter.fromJson(string, Habit.class);
             this.habitList.add(converter.fromJson(string, Habit.class));
         }
     }
@@ -233,8 +241,5 @@ public class MainHabitActivity extends AppCompatActivity {
 //        this.habitList.add(new Habit(result, 0));
 //        return this.habitList;
 //    }
-
-}
-
 
 }
