@@ -81,47 +81,47 @@ public class MainHabitActivity extends AppCompatActivity {
     private void displayHabits() {
         // http://stackoverflow.com/questions/5574673/what-is-the-easiest-way-to-get-the-current-day-of-the-week-in-android
         Integer day = Calendar.getInstance().get(Calendar.DAY_OF_WEEK) - 1; // 0 = Sunday
-        TextView currDate = (TextView) findViewById(R.id.currDateText);
+    TextView currDate = (TextView) findViewById(R.id.currDateText);
 
-        currDate.setText(this.convertToDayString(day));
-        displayHabits = (ListView) findViewById(R.id.habit_list);
+    currDate.setText(this.convertToDayString(day));
+    displayHabits = (ListView) findViewById(R.id.habit_list);
 
-        try {
-            loadFromFile();
-            Intent nIntent = getIntent();
-            String message = nIntent.getStringExtra("description");
-            if (message != null) {
-                habitList.add(new Habit(message, 0));
-                saveInFile();
-            }
-
-        } catch (Exception e) {
-            e.printStackTrace();
+    try {
+        loadFromFile();
+        Intent nIntent = getIntent();
+        String message = nIntent.getStringExtra("description");
+        if (message != null) {
+            habitList.add(new Habit(message, 0));
+            saveInFile();
         }
+
+    } catch (Exception e) {
+        e.printStackTrace();
+    }
 //        ArrayList<Habit> temp = this.habitLIst();
 
-        habitAdapter = new ArrayAdapter<Habit>(this, android.R.layout.simple_list_item_1,
-                android.R.id.text1, this.habitList);
+    habitAdapter = new ArrayAdapter<Habit>(this, android.R.layout.simple_list_item_1,
+    android.R.id.text1, this.habitList);
 
-        displayHabits.setAdapter(habitAdapter);
-        // create some fake habits for testing
+    displayHabits.setAdapter(habitAdapter);
+    // create some fake habits for testing
 
 //        habitAdapter.notifyDataSetChanged();
 
-        // create new habit button.
-        newHabit = (Button) findViewById(R.id.newHabit);
-        newHabit.setOnClickListener(new View.OnClickListener() {
+    // create new habit button.
+    newHabit = (Button) findViewById(R.id.newHabit);
+    newHabit.setOnClickListener(new View.OnClickListener() {
 
-            public void onClick(View v) {
-                setResult(RESULT_OK);
-                Intent addHabit;
-                addHabit = new Intent(v.getContext(), NewHabit.class);
-                startActivity(addHabit);
+        public void onClick(View v) {
+            setResult(RESULT_OK);
+            Intent addHabit;
+            addHabit = new Intent(v.getContext(), NewHabit.class);
+            startActivity(addHabit);
 
-            }
-        });
+        }
+    });
 
-    }
+}
     private String convertToDayString(int dayOfWeek) {
         if (dayOfWeek == 0) {
             return "Sunday";
@@ -160,7 +160,7 @@ public class MainHabitActivity extends AppCompatActivity {
 
         return this.habitList;
     }
-    
+
 
     // the following two methods were taken from lonelyTwitter class code
     private void loadFromFile() {
