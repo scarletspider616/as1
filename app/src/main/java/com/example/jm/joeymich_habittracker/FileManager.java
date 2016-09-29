@@ -105,6 +105,22 @@ public class FileManager {
         return this.habitList;
     }
 
+    public Habit getHabit(String message) {
+        // for now take habit message as key, even though ideally generate UUID
+        for (Habit habit: this.habitList) {
+            if (habit.getMessage().equals(message)) {
+                return habit;
+            }
+        }
+        return null;
+    }
+
+    public void deleteHabit(String message) {
+        // for now take habit message as key, even though ideally generate UUID
+        this.habitList.remove(this.getHabit(message));
+        saveInFile();
+    }
+
     // the following two methods were taken from lonelyTwitter class code
     private void loadFromFile() {
         try {
