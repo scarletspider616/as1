@@ -67,6 +67,7 @@ public class MainHabitActivity extends AppCompatActivity {
         displayHabits = (ListView) findViewById(R.id.habit_list);
 
         try {
+            fileManager = new FileManager(getApplicationContext());
             Intent nIntent = getIntent();
             String message = nIntent.getStringExtra("description");
             fileManager.addHabit(new Habit(message, 0));
@@ -74,7 +75,6 @@ public class MainHabitActivity extends AppCompatActivity {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        ArrayList<Habit> temp = fileManager.getHabitList();
 
         habitAdapter = new ArrayAdapter<Habit>(this, android.R.layout.simple_list_item_1,
                 android.R.id.text1, fileManager.getHabitList());

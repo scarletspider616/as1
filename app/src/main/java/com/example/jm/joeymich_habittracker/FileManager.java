@@ -7,6 +7,7 @@ import android.util.Log;
 
 import com.google.gson.Gson;
 
+import java.io.BufferedWriter;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -14,10 +15,13 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
+import java.io.OutputStreamWriter;
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.io.BufferedReader;
 
 import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
 import java.io.FileOutputStream;
 import java.io.InputStream;
@@ -91,90 +95,56 @@ public class FileManager {
         }
     }
 
-    private void updateFile() {
-        /**
-             * This work, "updateFile," is a derivative of examples from
-             * "Saving Files" by "Delpes," used under Apache 2.0 by Joey-Michael Fallone.
-             * (Available here:
-             * https://developer.android.com/training/basics/data-storage/files.html)
-             *
-         */
-
-        this.context.deleteFile(filename);
-        OutputStream outWrite = null;
-        try {
-            outWrite = this.context.openFileOutput(filename, Context.MODE_PRIVATE);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        for (Habit habit: this.habitList) {
-            String tempConverted = converter.toJson(habit);
-            try {
-                outWrite.write(tempConverted.getBytes());
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
-        try {
-            outWrite.close();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
     public void addHabit(Habit habit) {
         this.habitList.add(habit);
-        this.updateFile();
+        this.saveInFile();
     }
 
     public ArrayList<Habit> getHabitList() {
-//        return this.habitList;
-//        String size = new Integer(habitList.size()).toString();
-//        habitList.clear();
-//        habitList.add(new Habit(size, 0));
 
         return this.habitList;
     }
 
-    private ArrayList<String> loadFromFile() {
-        ArrayList<String> strings = new ArrayList<String>();
+    // the following two methods were taken from lonelyTwitter class code
+    private void loadFromFile() {
         try {
             FileInputStream fis = this.context.openFileInput(this.filename);
             BufferedReader in = new BufferedReader(new InputStreamReader(fis));
-            String line = in.readLine();
-            while (line != null) {
-                strings.add(line);
-                line = in.readLine();
-            }
 
-        } catch (FileNotFoundException e) {
+            Gson gson = new Gson();
+
+            // Code from http://stackoverflow.com/questions/12384064/gson-convert-from-json-to-a-typed-arraylistt
+            Type listType = new TypeToken<ArrayList<Habit>>() {
+            }.getType();
+
+            this.habitList = gson.fromJson(in, listType);
+
+        } catch (Exception e) {
             // TODO Auto-generated catch block
-            e.printStackTrace();
-        } catch (IOException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
+            this.habitList = new ArrayList<Habit>();
         }
-        return strings;
-
     }
 
-    private void updateList() {
-        ArrayList<String> strings = this.loadFromFile();
+    private void saveInFile() {
+        try {
+            FileOutputStream fos = this.context.openFileOutput(this.filename,
+                    0);
 
+            BufferedWriter out = new BufferedWriter(new OutputStreamWriter(fos));
+
+            Gson gson = new Gson();
+            gson.toJson(this.habitList, out);
+            out.flush();
+
+            fos.close();
+        } catch (Exception e) {
+            // TODO Auto-generated catch block
+            throw new RuntimeException();
+        }
     }
 
-//    public ArrayList<Habit> getSaveString() {
-//        String result = "";
-//        try {
-//            InputStream inRead = this.context.openFileInput(filename);
-//            result = dumpData(inRead);
-//        } catch (Exception e) {
-//            // pass
-//        }
-//        this.habitList = new ArrayList<Habit>();
-//        this.habitList.add(new Habit(result, 0));
-//        return this.habitList;
-//    }
+
+
 
 }
 
