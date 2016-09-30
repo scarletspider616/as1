@@ -1,13 +1,17 @@
 package com.example.jm.joeymich_habittracker;
 
+import android.app.DatePickerDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.DatePicker;
 import android.widget.TextView;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 
 public class HabitDetailActivity extends AppCompatActivity {
@@ -87,6 +91,13 @@ public class HabitDetailActivity extends AppCompatActivity {
         };
         AlertDialog.Builder builder = new AlertDialog.Builder(v.getContext());
         builder.setMessage("Added Completion.").setPositiveButton("OK", dialogClickListener).show();
+        finish();
+    }
+
+    public void changeDate(View v) {
+        Intent newIntent = new Intent(this, ChooseDate.class);
+        newIntent.putExtra("id", this.habitID);
+        startActivity(newIntent);
         finish();
     }
 }
