@@ -45,7 +45,7 @@ public class FileManager {
     private String posFilename = "pos.dat";
     private Integer pos = null;
 
-    public FileManager (Context cntxt) {
+    public FileManager(Context cntxt) {
         habitList = new ArrayList<Habit>();
         converter = new Gson();
         this.context = cntxt;
@@ -92,7 +92,7 @@ public class FileManager {
 
 
         // now update habitList
-        for (String string: strings) {
+        for (String string : strings) {
             this.habitList.add(converter.fromJson(string, Habit.class));
         }
     }
@@ -109,7 +109,7 @@ public class FileManager {
 
     public Habit getHabit(String message) {
         // for now take habit message as key, even though ideally generate UUID
-        for (Habit habit: this.habitList) {
+        for (Habit habit : this.habitList) {
             if (habit.getMessage().equals(message)) {
                 return habit;
             }
@@ -121,21 +121,23 @@ public class FileManager {
         return this.habitList.get(position);
     }
 
+    public void deleteHabit(int position) {
+        this.habitList.remove(position);
+        saveInFile();
+    }
+
     public void deleteHabit(String message) {
-        // for now take habit message as key, even though ideally generate UUID
-        this.habitList.remove(this.getHabit(message));
+        this.habitList.remove(message);
         saveInFile();
     }
 
     private void cleanup() {
-        for (Habit habit: habitList) {
+        for (Habit habit : habitList) {
             if (habit.getMessage() == null) {
                 this.deleteHabit(habit.getMessage());
-            }
-            else if(habit.getMessage().equals("")) {
+            } else if (habit.getMessage().equals("")) {
                 this.deleteHabit(habit.getMessage());
-            }
-            else if(habit.getMessage().equals("null")) {
+            } else if (habit.getMessage().equals("null")) {
                 this.deleteHabit(habit.getMessage());
             }
         }
@@ -181,51 +183,4 @@ public class FileManager {
             throw new RuntimeException();
         }
     }
-
-    public Integer getPos() {
-        try {
-            FileInputStream fis = this.context.openFileInput(this.filename);
-            BufferedReader in = new BufferedReader(new InputStreamReader(fis));
-
-            Gson gson = new Gson();
-
-            // Code from http://stackoverflow.com/questions/12384064/gson-convert-from-json-to-a-typed-arraylistt
-            Type listType = new TypeToken<Integer>() {
-            }.getType();
-
-            this.pos = gson.fromJson(in, listType);
-
-
-        } catch (Exception e) {
-            // TODO Auto-generated catch block
-            this.habitList = new ArrayList<Habit>();
-            this.cleanup();
-        }
-        this.context.deleteFile(posFilename);
-        return this.pos;
-    }
-
-    public void setPos(Integer inInt) {
-        this.pos = inInt;
-        try {
-            FileOutputStream fos = this.context.openFileOutput(this.filename,
-                    0);
-
-            BufferedWriter out = new BufferedWriter(new OutputStreamWriter(fos));
-
-            Gson gson = new Gson();
-            gson.toJson(this.pos, out);
-            out.flush();
-
-            fos.close();
-        } catch (Exception e) {
-            // TODO Auto-generated catch block
-            throw new RuntimeException();
-        }
-    }
-
-
-
-
 }
-

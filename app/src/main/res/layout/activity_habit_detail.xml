@@ -17,7 +17,8 @@
         android:id="@+id/completeButton"
         android:layout_alignParentTop="true"
         android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true" />
+        android:layout_alignParentEnd="true"
+        android:onClick="addCompletion" />
 
     <Button
         android:text="Modify"
@@ -28,7 +29,8 @@
         android:layout_alignLeft="@+id/completeButton"
         android:layout_alignStart="@+id/completeButton"
         android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true" />
+        android:layout_alignParentEnd="true"
+        android:onClick="changeStartDate" />
 
     <Button
         android:text="delete"
@@ -39,7 +41,8 @@
         android:layout_alignStart="@+id/modifyButton"
         android:id="@+id/deleteButton"
         android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true" />
+        android:layout_alignParentEnd="true"
+        android:onClick="deleteHabit" />
 
     <TextView
         android:text="Completions:"
