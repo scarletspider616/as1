@@ -21,8 +21,20 @@ public class Habit {
 
         this.populateDaysToCompleteOn(this.daysToCompleteOn);
 
-        for (int day = 0; day < toCompleteOn.length; day++) {
-            this.daysToCompleteOn[day] = Boolean.TRUE;
+        for (int i = 0; i < toCompleteOn.length; i++) {
+            this.daysToCompleteOn[toCompleteOn[i]] = Boolean.TRUE;
+        }
+    }
+    public Habit (String name, ArrayList<Integer> toCompleteOn) {
+        this.dateEntered = new Date();
+        this.name = name;
+        completes = new ArrayList<Completion>();
+        this.daysToCompleteOn = new Boolean[7];
+
+        this.populateDaysToCompleteOn(this.daysToCompleteOn);
+
+        for (Integer day:toCompleteOn) {
+            this.daysToCompleteOn[day] = Boolean.FALSE;
         }
     }
 

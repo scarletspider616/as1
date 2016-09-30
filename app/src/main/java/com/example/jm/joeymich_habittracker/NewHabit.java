@@ -27,6 +27,7 @@ public class NewHabit extends AppCompatActivity {
         Intent newIntent = new Intent(this, ChooseDay.class);
         newIntent.putExtra("description", message);
         startActivity(newIntent);
+        finish();
     }
 
 }

@@ -73,9 +73,14 @@ public class ChooseDay extends AppCompatActivity {
     }
 
     public void headBackToMainScreen(View v) {
-        Intent nIntent = new Intent(v.getContext(), MainHabitActivity.class);
-        nIntent.putIntegerArrayListExtra("days", daysSelected);
-        nIntent.putExtra("description", description);
-        startActivity(nIntent);
+        this.onClick(v);
+        saveHabit();
+        finish();
+    }
+
+    private void saveHabit() {
+        FileManager fm = new FileManager(getApplicationContext());
+        fm.addHabit(new Habit(this.description, this.daysSelected));
+        finish();
     }
 }

@@ -69,9 +69,12 @@ public class MainHabitActivity extends AppCompatActivity
     public void onItemClick(AdapterView<?> l, View v, int position, long id) {
         ClickListItemFragment dialog = new ClickListItemFragment();
         FragmentManager fm = getFragmentManager();
-        finish();
-        System.exit(0);
         dialog.show(fm, "onItemClick");
+    }
+
+    public void onResume() {
+        super.onResume();
+        displayHabits();
     }
 
     private void displayHabits() {
@@ -89,15 +92,16 @@ public class MainHabitActivity extends AppCompatActivity
             }
         });
 
-        try {
-            fileManager = new FileManager(getApplicationContext());
-            Intent nIntent = getIntent();
-            String message = nIntent.getStringExtra("description");
-            fileManager.addHabit(new Habit(message, 0));
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+//        try {
+//            fileManager = new FileManager(getApplicationContext());
+//            Intent nIntent = getIntent();
+//            String message = nIntent.getStringExtra("description");
+//            fileManager.addHabit(new Habit(message, 0));
+//
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+        fileManager = new FileManager(getApplicationContext());
         ArrayList<Habit> temp = fileManager.getHabitList();
 
         habitAdapter = new ArrayAdapter<Habit>(this, android.R.layout.simple_list_item_1,
@@ -131,13 +135,13 @@ public class MainHabitActivity extends AppCompatActivity
 
     @Override
     public void onCancelClick(DialogFragment dialog) {
-        // User touched the dialog's negative button
-        
+        // Do nothing! We want to head back.
+
     }
 
     @Override
     public void onCompletionClick(DialogFragment dialog) {
-        // fill this
+        // check with debugging to ensure working
     }
     private String convertToDayString(int dayOfWeek) {
         if (dayOfWeek == 0) {
