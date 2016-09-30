@@ -183,4 +183,8 @@ public class FileManager {
             throw new RuntimeException();
         }
     }
+
+    public void addCompletion(int id, Date date) {
+        this.habitList.get(id).addCompletion(date);
+    }
 }

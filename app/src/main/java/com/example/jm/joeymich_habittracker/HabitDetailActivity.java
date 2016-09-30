@@ -8,6 +8,8 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
 
+import java.util.Date;
+
 public class HabitDetailActivity extends AppCompatActivity {
     private int habitID;
     private Habit habit;
@@ -61,6 +63,30 @@ public class HabitDetailActivity extends AppCompatActivity {
 
     private void deleteHabit() {
         this.fm.deleteHabit(habitID);
+        finish();
+    }
+
+    public void addCompletion(View v) {
+        fm.addCompletion(habitID, new Date());
+        /**
+         * The following dialog contained in "addCompletion" is a derivative of an answer to
+         * "How to display a Yes/No dialog box on Android?" by "Steve Haley," a user on
+         * stack overflow, used under CC-BY-SA by Joey-Michael Fallone.
+         * Available here:
+         * http://stackoverflow.com/questions/2478517/how-to-display-a-yes-no-dialog-box-on-android
+         */
+        DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                switch (which) {
+                    case DialogInterface.BUTTON_POSITIVE:
+                        deleteHabit();
+                        break;
+                }
+            }
+        };
+        AlertDialog.Builder builder = new AlertDialog.Builder(v.getContext());
+        builder.setMessage("Added Completion.").setPositiveButton("OK", dialogClickListener).show();
         finish();
     }
 }
