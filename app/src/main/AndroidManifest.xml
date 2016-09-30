@@ -24,7 +24,8 @@
             android:value="@integer/google_play_services_version" />
 
         <activity android:name=".NewHabit" />
-        <activity android:name=".ChooseDay"></activity>
+        <activity android:name=".ChooseDay" />
+        <activity android:name=".HabitDetailActivity"></activity>
     </application>
 
 </manifest>

@@ -42,8 +42,7 @@ import static android.app.PendingIntent.getActivity;
 // http://stackoverflow.com/questions/13281197/android-how-to-create-clickable-listview
 
 
-public class MainHabitActivity extends AppCompatActivity
-        implements ClickListItemFragment.ClickListDialogListener{
+public class MainHabitActivity extends AppCompatActivity {
     private String[] daysList;
     private Button newHabit;
     private ArrayAdapter<Habit> habitAdapter;
@@ -62,19 +61,13 @@ public class MainHabitActivity extends AppCompatActivity
         // ^ common knowledge attribution (see readme)
         // http://stackoverflow.com/questions/4721626/how-to-get-the-current-context
 
-        this.displayHabits();
+//        this.displayHabits();
 
-    }
-
-    public void onItemClick(AdapterView<?> l, View v, int position, long id) {
-        ClickListItemFragment dialog = new ClickListItemFragment();
-        FragmentManager fm = getFragmentManager();
-        dialog.show(fm, "onItemClick");
     }
 
     public void onResume() {
         super.onResume();
-        displayHabits();
+        this.displayHabits();
     }
 
     private void displayHabits() {
@@ -86,21 +79,12 @@ public class MainHabitActivity extends AppCompatActivity
         displayHabits = (ListView) findViewById(R.id.habit_list);
         displayHabits.setOnItemClickListener(new AdapterView.OnItemClickListener()  {
             public void onItemClick(AdapterView<?> l, View v, int position, long id) {
-                ClickListItemFragment dialog = new ClickListItemFragment();
-                FragmentManager fm = getFragmentManager();
-                dialog.show(fm, "onItemClick");
+                Intent nIntent = new Intent(v.getContext(), HabitDetailActivity.class);
+                nIntent.putExtra("id", position);
+                startActivity(nIntent);
             }
         });
 
-//        try {
-//            fileManager = new FileManager(getApplicationContext());
-//            Intent nIntent = getIntent();
-//            String message = nIntent.getStringExtra("description");
-//            fileManager.addHabit(new Habit(message, 0));
-//
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
         fileManager = new FileManager(getApplicationContext());
         ArrayList<Habit> temp = fileManager.getHabitList();
 
@@ -125,23 +109,6 @@ public class MainHabitActivity extends AppCompatActivity
             }
         });
 
-    }
-    // api taken from https://developer.android.com/guide/topics/ui/dialogs.html
-    // (should it be licensed here again???)
-    @Override
-    public void onDetailClick(DialogFragment dialog) {
-
-    }
-
-    @Override
-    public void onCancelClick(DialogFragment dialog) {
-        // Do nothing! We want to head back.
-
-    }
-
-    @Override
-    public void onCompletionClick(DialogFragment dialog) {
-        // check with debugging to ensure working
     }
     private String convertToDayString(int dayOfWeek) {
         if (dayOfWeek == 0) {

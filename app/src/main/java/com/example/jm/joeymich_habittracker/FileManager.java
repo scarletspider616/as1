@@ -42,6 +42,8 @@ public class FileManager {
     private Gson converter;
     private FileOutputStream outputStream;
     private Context context;
+    private String posFilename = "pos.dat";
+    private Integer pos = null;
 
     public FileManager (Context cntxt) {
         habitList = new ArrayList<Habit>();
@@ -115,6 +117,10 @@ public class FileManager {
         return null;
     }
 
+    public Habit getHabit(Integer position) {
+        return this.habitList.get(position);
+    }
+
     public void deleteHabit(String message) {
         // for now take habit message as key, even though ideally generate UUID
         this.habitList.remove(this.getHabit(message));
@@ -167,6 +173,48 @@ public class FileManager {
 
             Gson gson = new Gson();
             gson.toJson(this.habitList, out);
+            out.flush();
+
+            fos.close();
+        } catch (Exception e) {
+            // TODO Auto-generated catch block
+            throw new RuntimeException();
+        }
+    }
+
+    public Integer getPos() {
+        try {
+            FileInputStream fis = this.context.openFileInput(this.filename);
+            BufferedReader in = new BufferedReader(new InputStreamReader(fis));
+
+            Gson gson = new Gson();
+
+            // Code from http://stackoverflow.com/questions/12384064/gson-convert-from-json-to-a-typed-arraylistt
+            Type listType = new TypeToken<Integer>() {
+            }.getType();
+
+            this.pos = gson.fromJson(in, listType);
+
+
+        } catch (Exception e) {
+            // TODO Auto-generated catch block
+            this.habitList = new ArrayList<Habit>();
+            this.cleanup();
+        }
+        this.context.deleteFile(posFilename);
+        return this.pos;
+    }
+
+    public void setPos(Integer inInt) {
+        this.pos = inInt;
+        try {
+            FileOutputStream fos = this.context.openFileOutput(this.filename,
+                    0);
+
+            BufferedWriter out = new BufferedWriter(new OutputStreamWriter(fos));
+
+            Gson gson = new Gson();
+            gson.toJson(this.pos, out);
             out.flush();
 
             fos.close();
