@@ -50,6 +50,12 @@ public class ChooseDay extends AppCompatActivity {
 
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        
+    }
+
     public void onClick(View v) {
         // http://theopentutorials.com/tutorials/android/listview/android-multiple-selection-listview/
         // ^ Please see readme for this "common knowledge" attribution

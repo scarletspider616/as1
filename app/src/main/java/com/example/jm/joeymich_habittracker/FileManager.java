@@ -187,4 +187,14 @@ public class FileManager {
     public void addCompletion(int id, Date date) {
         this.habitList.get(id).addCompletion(date);
     }
+
+    public ArrayList<Habit> getTodaysHabits(int day) {
+        ArrayList<Habit> newList = new ArrayList<Habit>();
+        for (Habit habit: this.habitList) {
+            if (habit.toBeCompletedOn(day).equals(Boolean.TRUE)) {
+                newList.add(habit);
+            }
+        }
+        return newList;
+    }
 }

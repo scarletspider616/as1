@@ -34,7 +34,7 @@ public class Habit {
         this.populateDaysToCompleteOn(this.daysToCompleteOn);
 
         for (Integer day:toCompleteOn) {
-            this.daysToCompleteOn[day] = Boolean.FALSE;
+            this.daysToCompleteOn[day] = Boolean.TRUE;
         }
     }
 
