@@ -50,12 +50,6 @@ public class ChooseDay extends AppCompatActivity {
 
     }
 
-    @Override
-    public void onResume() {
-        super.onResume();
-        
-    }
-
     public void onClick(View v) {
         // http://theopentutorials.com/tutorials/android/listview/android-multiple-selection-listview/
         // ^ Please see readme for this "common knowledge" attribution
@@ -78,6 +72,16 @@ public class ChooseDay extends AppCompatActivity {
         inStrings[6] = "Saturday";
     }
 
+    private static void populateStringsStatic(String[] inStrings) {
+        inStrings[0] = "Sunday";
+        inStrings[1] = "Monday";
+        inStrings[2] = "Tuesday";
+        inStrings[3] = "Wednesday";
+        inStrings[4] = "Thursday";
+        inStrings[5] = "Friday";
+        inStrings[6] = "Saturday";
+    }
+
     public void headBackToMainScreen(View v) {
         this.onClick(v);
         saveHabit();
@@ -88,5 +92,11 @@ public class ChooseDay extends AppCompatActivity {
         FileManager fm = new FileManager(getApplicationContext());
         fm.addHabit(new Habit(this.description, this.daysSelected));
         finish();
+    }
+
+    public static String[] getDayStrings() {
+        String[] results = new String[7];
+        populateStringsStatic(results);
+        return results;
     }
 }

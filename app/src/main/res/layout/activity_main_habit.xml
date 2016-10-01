@@ -28,7 +28,8 @@
         android:layout_alignParentTop="true"
         android:layout_alignLeft="@+id/newHabit"
         android:layout_alignStart="@+id/newHabit"
-        android:id="@+id/changeDay" />
+        android:id="@+id/changeDay"
+        android:onClick="changeDay" />
 
     <TextView
         android:layout_width="wrap_content"

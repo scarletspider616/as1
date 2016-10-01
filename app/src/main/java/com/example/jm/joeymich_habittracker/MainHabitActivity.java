@@ -107,6 +107,12 @@ public class MainHabitActivity extends AppCompatActivity {
 
     }
 
+    public void changeDay(View v) {
+        Intent intent = new Intent(v.getContext(), ChangeDay.class);
+        startActivity(intent);
+        finish();
+    }
+
     private String convertToDayString(int dayOfWeek) {
         if (dayOfWeek == 0) {
             return "Sunday";
