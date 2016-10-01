@@ -73,6 +73,16 @@ public class Habit {
     public Integer getNumberOfCompletes() {
         return completes.size();
     }
+    public Boolean completedRecently(Date date) {
+        // fix depreciated if time
+        // 1 week in ms: 6.048e+8
+        for (Completion completion: completes) {
+            if (date.getSeconds() - completion.getCompletionDate().getSeconds() < 604800000) {
+                return true;
+            }
+        }
+        return false;
+    }
 
     @Override
     public String toString() {

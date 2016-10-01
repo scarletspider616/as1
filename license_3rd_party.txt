@@ -23,6 +23,16 @@ CC-BY-SA:
     Available here:
     http://stackoverflow.com/questions/2478517/how-to-display-a-yes-no-dialog-box-on-android
 
+ 	This work, "joeymich-HabitTracker," contains a derivative of 
+    "ustom Adapter for List View" by "Rakhita," edited by, "Anirudh," users on
+    stack overflow, used under CC-BY-SA by Joey-Michael Fallone.
+    Available here:
+    http://stackoverflow.com/questions/2478517/how-to-display-a-yes-no-dialog-box-on-android
+
+ 	This work, "joeymich-HabitTracker," contains a derivative of 
+    "Android ListView Text Color" by "Shardul," a user on
+    stack overflow, used under CC-BY-SA by Joey-Michael Fallone.
+    
 Apache 2.0: 
 
     This work, "loadFromFile," is a derivative of examples from

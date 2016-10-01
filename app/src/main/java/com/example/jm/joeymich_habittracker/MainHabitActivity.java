@@ -85,8 +85,8 @@ public class MainHabitActivity extends AppCompatActivity {
         fileManager = new FileManager(getApplicationContext());
         ArrayList<Habit> currHabits = fileManager.getTodaysHabits(day);
         ArrayList<Habit> temp = fileManager.getHabitList();
-        habitAdapter = new ArrayAdapter<Habit>(this, android.R.layout.simple_list_item_1,
-                android.R.id.text1, currHabits);
+        habitAdapter = new RecentColoredAdapter<Habit>(this,
+                android.R.id.text1, currHabits, this.day);
 
         displayHabits.setAdapter(habitAdapter);
         // create some fake habits for testing
