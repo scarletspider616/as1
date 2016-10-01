@@ -31,6 +31,7 @@ public class HabitDetailActivity extends AppCompatActivity {
     private View currView = null;
     private ArrayAdapter<Completion> adapter;
     private TextView createdOn;
+    private TextView completions;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,6 +53,8 @@ public class HabitDetailActivity extends AppCompatActivity {
         habitName.setText(this.habit.getMessage());
         createdOn = (TextView) findViewById(R.id.createdOn);
         createdOn.setText(this.habit.getDateEntered().toString());
+        completions = (TextView) findViewById(R.id.completionTitle);
+        completions.setText("Completions: " + this.habit.getNumberOfCompletes());
 
         // completions list
         displayCompletions = (ListView) findViewById(R.id.completionList);
@@ -103,7 +106,26 @@ public class HabitDetailActivity extends AppCompatActivity {
 
     public void addCompletion(View v) {
         fm.addCompletion(habitID, day, new Date());
-        finalDialog("Added Completion.");
+        /**
+         * The following dialog contained in "addCompletion" is a derivative of an answer to
+         * "How to display a Yes/No dialog box on Android?" by "Steve Haley," a user on
+         * stack overflow, used under CC-BY-SA by Joey-Michael Fallone.
+         * Available here:
+         * http://stackoverflow.com/questions/2478517/how-to-display-a-yes-no-dialog-box-on-android
+         */
+        DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                switch (which) {
+                    case DialogInterface.BUTTON_POSITIVE:
+                        finish();
+                        break;
+                }
+            }
+        };
+        AlertDialog.Builder builder = new AlertDialog.Builder(v.getContext());
+        builder.setMessage("Added Completion.").setPositiveButton("OK", dialogClickListener).show();
+        adapter.notifyDataSetChanged();
     }
 
     public void deleteCompletion(int position, View v) {
@@ -135,33 +157,49 @@ public class HabitDetailActivity extends AppCompatActivity {
         AlertDialog.Builder builder = new AlertDialog.Builder(v.getContext());
         builder.setMessage("Delete this completion?").setPositiveButton("Yes", dialogClickListener)
                 .setNegativeButton("No", dialogClickListener).show();
-        this.currView = null;
+        String temp = "Completions: " + this.habit.getNumberOfCompletes().toString();
+        completions.setText(temp);
         adapter.notifyDataSetChanged();
-
     }
 
     private void deleteCompletion() {
         fm.deleteCompletion(habitID, day, this.toDelete);
         this.toDelete = null;
-        finalDialog("Deleted Completion.");
-    }
-
-    public void finalDialog(String message) {
         DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                switch (which) {
+                switch(which) {
                     case DialogInterface.BUTTON_POSITIVE:
-//                        finish();
+                        finish();
                         break;
                 }
             }
         };
         AlertDialog.Builder builder = new AlertDialog.Builder(this.currView.getContext());
-        builder.setMessage(message).setPositiveButton("OK",
-                dialogClickListener).show();
+        builder.setMessage("Deleted Completion.").setPositiveButton("OK", dialogClickListener).show();
         adapter.notifyDataSetChanged();
+
+
     }
+
+//    public void finalDialog(String message) {
+//        DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
+//            @Override
+//            public void onClick(DialogInterface dialog, int which) {
+//                switch (which) {
+//                    case DialogInterface.BUTTON_POSITIVE:
+////                        finish();
+//                        break;
+//                }
+//            }
+//        };
+//        AlertDialog.Builder builder = new AlertDialog.Builder(this.currView.getContext());
+//        builder.setMessage(message).setPositiveButton("OK",
+//                dialogClickListener).show();
+//        String temp = "Completions: " + this.habit.getNumberOfCompletes().toString();
+//        completions.setText(temp);
+//        adapter.notifyDataSetChanged();
+//    }
 
 
     public void changeStartDate(View v) {

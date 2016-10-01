@@ -70,6 +70,9 @@ public class Habit {
     public ArrayList<Completion> getCompletes () {
         return this.completes;
     }
+    public Integer getNumberOfCompletes() {
+        return completes.size();
+    }
 
     @Override
     public String toString() {

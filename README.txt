@@ -23,3 +23,6 @@ Attributions (Common Knowledge):
 
     http://stackoverflow.com/questions/4721626/how-to-get-the-current-context
     - How to get current application context
+
+    http://stackoverflow.com/questions/11213699/is-it-possible-to-make-a-checkbox-radio-button-uncheckable
+    - android:clickable XML property
