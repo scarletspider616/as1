@@ -56,7 +56,7 @@ public class DatePickerFragment extends DialogFragment
         String sMonth = null;
         String sDay = null;
 
-        if (month.toString().length() < 2) {
+        if (Integer.valueOf(month+1).toString().length() < 2) {
             sMonth = "0" + (Integer.valueOf(month+1)).toString();
         }
         else {

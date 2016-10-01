@@ -11,6 +11,7 @@ public class Completion {
     // using aggregation
     private Date completionDate;
 
+    // constructor
     public Completion (Date date) {
         this.completionDate = date;
     }
