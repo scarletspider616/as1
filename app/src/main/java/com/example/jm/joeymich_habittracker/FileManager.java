@@ -117,8 +117,13 @@ public class FileManager {
         return null;
     }
 
-    public Habit getHabit(Integer position) {
+    private Habit getHabit(Integer position) {
         return this.habitList.get(position);
+    }
+
+    public Habit getHabit(int position, int day) {
+        int actualPosition = this.habitList.indexOf(getTodaysHabits(day).get(position));
+        return getHabit(actualPosition);
     }
 
     public void deleteHabit(int position, int day) {
@@ -184,8 +189,10 @@ public class FileManager {
         }
     }
 
-    public void addCompletion(int id, Date date) {
-        this.habitList.get(id).addCompletion(date);
+    public void addCompletion(int id, int day, Date date) {
+        int actual_id = this.habitList.indexOf(getTodaysHabits(day).get(id));
+        this.habitList.get(actual_id).addCompletion(date);
+        saveInFile();
     }
 
     public ArrayList<Habit> getTodaysHabits(int day) {

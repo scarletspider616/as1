@@ -15,7 +15,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 
 /**
- * This work, "MainHabitActivity," is a derivative of
+ * This work, "MainHabitActivity," contains a derivative of
  * "Android - How to create clickable listview?" by "Delpes," a stackoverflow user,
  * used under CC-BY-SA by Joey-Michael Fallone.
  * (Available here:

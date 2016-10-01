@@ -17,4 +17,7 @@ public class Completion {
     public Date getCompletionDate () {
         return this.completionDate;
     }
+    public String toString() {
+        return this.completionDate.toString();
+    }
 }
