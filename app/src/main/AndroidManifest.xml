@@ -26,7 +26,6 @@
         <activity android:name=".NewHabit" />
         <activity android:name=".ChooseDay" />
         <activity android:name=".HabitDetailActivity" />
-        <activity android:name=".ChooseDate" />
         <activity android:name=".ChangeDay"></activity>
     </application>
 

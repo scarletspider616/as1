@@ -190,14 +190,16 @@ public class FileManager {
     }
 
     public void deleteCompletion(int id, int day, int compID) {
-        int actualID = this.habitList.indexOf(getTodaysHabits(day).get(id));
-        this.habitList.get(actualID).deleteCompletion(compID);
+        this.habitList.get(getActualId(id, day)).deleteCompletion(compID);
         saveInFile();
     }
 
+    public int getActualId(int id, int day) {
+        return this.habitList.indexOf(getTodaysHabits(day).get(id));
+    }
+
     public void addCompletion(int id, int day, Date date) {
-        int actual_id = this.habitList.indexOf(getTodaysHabits(day).get(id));
-        this.habitList.get(actual_id).addCompletion(date);
+        this.habitList.get(getActualId(id, day)).addCompletion(date);
         saveInFile();
     }
 
@@ -209,5 +211,10 @@ public class FileManager {
             }
         }
         return newList;
+    }
+
+    public void changeHabitCreationDate(int id, int day, Date date) {
+        this.habitList.get(getActualId(id, day)).changeDateEntered(date);
+        saveInFile();
     }
 }
