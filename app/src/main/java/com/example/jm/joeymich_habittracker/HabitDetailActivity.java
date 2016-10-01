@@ -18,6 +18,7 @@ public class HabitDetailActivity extends AppCompatActivity {
     private int habitID;
     private Habit habit;
     FileManager fm;
+    private int day;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,6 +30,7 @@ public class HabitDetailActivity extends AppCompatActivity {
         super.onResume();
         Intent intent = getIntent();
         this.habitID = intent.getIntExtra("id", 0);
+        this.day = intent.getIntExtra("day", 0);
         this.fm = new FileManager(getApplicationContext());
         this.habit = fm.getHabit(this.habitID);
 
@@ -66,7 +68,7 @@ public class HabitDetailActivity extends AppCompatActivity {
     }
 
     private void deleteHabit() {
-        this.fm.deleteHabit(habitID);
+        this.fm.deleteHabit(habitID, day);
         finish();
     }
 

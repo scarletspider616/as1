@@ -121,8 +121,8 @@ public class FileManager {
         return this.habitList.get(position);
     }
 
-    public void deleteHabit(int position) {
-        this.habitList.remove(position);
+    public void deleteHabit(int position, int day) {
+        this.habitList.remove(this.habitList.indexOf(getTodaysHabits(day).get(position)));
         saveInFile();
     }
 

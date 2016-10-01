@@ -77,6 +77,7 @@ public class MainHabitActivity extends AppCompatActivity {
             public void onItemClick(AdapterView<?> l, View v, int position, long id) {
                 Intent nIntent = new Intent(v.getContext(), HabitDetailActivity.class);
                 nIntent.putExtra("id", position);
+                nIntent.putExtra("day", day);
                 startActivity(nIntent);
             }
         });
