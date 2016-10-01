@@ -28,6 +28,9 @@ public class HabitDetailActivity extends AppCompatActivity {
     FileManager fm;
     private int day;
     private ListView displayCompletions;
+    private Integer toDelete = null;
+    private View currView = null;
+    private ArrayAdapter<Completion> adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,13 +57,10 @@ public class HabitDetailActivity extends AppCompatActivity {
         displayCompletions.setOnItemClickListener(new AdapterView.OnItemClickListener()  {
             @Override
             public void onItemClick(AdapterView<?> l, View v, int position, long id) {
-                Intent nIntent = new Intent(v.getContext(), HabitDetailActivity.class);
-                nIntent.putExtra("id", position);
-                nIntent.putExtra("day", day);
-                startActivity(nIntent);
+                deleteCompletion(position, v);
             }
         });
-        ArrayAdapter<Completion> adapter = new ArrayAdapter<Completion>(this,
+        adapter = new ArrayAdapter<Completion>(this,
                 android.R.layout.simple_list_item_1, android.R.id.text1, this.habit.getCompletes());
         displayCompletions.setAdapter(adapter);
 
@@ -114,14 +114,66 @@ public class HabitDetailActivity extends AppCompatActivity {
             public void onClick(DialogInterface dialog, int which) {
                 switch (which) {
                     case DialogInterface.BUTTON_POSITIVE:
-                        finish();
+//                        finish();
                         break;
                 }
             }
         };
         AlertDialog.Builder builder = new AlertDialog.Builder(v.getContext());
         builder.setMessage("Added Completion.").setPositiveButton("OK", dialogClickListener).show();
+        adapter.notifyDataSetChanged();
     }
+
+    public void deleteCompletion(int position, View v) {
+        /**
+         * The following dialog contained in both "deleteCompletion" methods is a derivative of an
+         * answer to "How to display a Yes/No dialog box on Android?" by "Steve Haley," a user on
+         * stack overflow, used under CC-BY-SA by Joey-Michael Fallone.
+         * Available here:
+         * http://stackoverflow.com/questions/2478517/how-to-display-a-yes-no-dialog-box-on-android
+         */
+        this.toDelete = position;
+        this.currView = v;
+        DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                switch (which){
+                    case DialogInterface.BUTTON_POSITIVE:
+                        deleteCompletion();
+                        break;
+
+                    case DialogInterface.BUTTON_NEGATIVE:
+                        // do nada
+                        break;
+                }
+            }
+        };
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(v.getContext());
+        builder.setMessage("Delete this completion?").setPositiveButton("Yes", dialogClickListener)
+                .setNegativeButton("No", dialogClickListener).show();
+    }
+
+    private void deleteCompletion() {
+        fm.deleteCompletion(habitID, day, this.toDelete);
+        this.toDelete = null;
+        DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                switch (which) {
+                    case DialogInterface.BUTTON_POSITIVE:
+//                        finish();
+                        break;
+                }
+            }
+        };
+        AlertDialog.Builder builder = new AlertDialog.Builder(this.currView.getContext());
+        builder.setMessage("Deleted Completion.").setPositiveButton("OK",
+                dialogClickListener).show();
+        adapter.notifyDataSetChanged();
+        this.currView = null;
+    }
+
 
     public void changeStartDate(View v) {
         Intent newIntent = new Intent(this, ChooseDate.class);

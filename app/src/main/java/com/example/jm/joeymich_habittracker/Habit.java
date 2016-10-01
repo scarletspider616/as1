@@ -53,6 +53,9 @@ public class Habit {
     public void addCompletion (Date date) {
         completes.add(new Completion (date));
     }
+    public void deleteCompletion (int index) {
+        completes.remove(index);
+    }
 
     // getters
     public String getMessage () {

@@ -36,7 +36,7 @@ public class ChangeDay extends AppCompatActivity {
             }
         });
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
-                android.R.layout.simple_list_item_multiple_choice,
+                android.R.layout.simple_list_item_1,
                 android.R.id.text1, ChooseDay.getDayStrings());
         listView.setAdapter(adapter);
     }
