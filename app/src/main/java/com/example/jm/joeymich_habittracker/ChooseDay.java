@@ -56,10 +56,11 @@ public class ChooseDay extends AppCompatActivity {
         SparseBooleanArray checked = daysList.getCheckedItemPositions();
         daysSelected = new ArrayList<Integer>();
         for (int i = 0; i < checked.size(); i++) {
-            if (checked.get(i) == (Boolean.TRUE)) {
-                daysSelected.add(i);
+            if (checked.valueAt(i) == (Boolean.TRUE)) {
+                daysSelected.add(checked.keyAt(i));
             }
         }
+        int x = 1;
     }
 
     private void populateStrings(String[] inStrings) {
