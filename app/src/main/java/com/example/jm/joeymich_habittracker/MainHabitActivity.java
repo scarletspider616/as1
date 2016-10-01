@@ -9,6 +9,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.graphics.Color;
 
 
 import java.util.ArrayList;
@@ -72,7 +73,7 @@ public class MainHabitActivity extends AppCompatActivity {
 
         TextView currDate = (TextView) findViewById(R.id.currDateText);
         currDate.setText(this.convertToDayString(day));
-        displayHabits = (ListView) findViewById(R.id.habit_list);
+        displayHabits = (ListView) findViewById(R.id.completed);
         displayHabits.setOnItemClickListener(new AdapterView.OnItemClickListener()  {
             public void onItemClick(AdapterView<?> l, View v, int position, long id) {
                 Intent nIntent = new Intent(v.getContext(), HabitDetailActivity.class);

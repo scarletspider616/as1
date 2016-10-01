@@ -40,11 +40,36 @@
         android:textSize="32dp"
         android:id="@+id/currDateText" />
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Completed recently:"
+        android:paddingTop="45dp"
+        android:paddingRight="20dp"
+        />
+
     <ListView
-        android:id="@+id/habit_list"
+        android:id="@+id/completed"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/changeDay"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        android:layout_alignParentStart="true"
+        android:paddingBottom="205dp"
+        android:layout_below="@+id/changeDay"
+        android:layout_toLeftOf="@+id/newHabit"
+        android:layout_toStartOf="@+id/newHabit"
+        android:paddingRight="20dp"/>
+    <TextView
+        android:paddingTop="290dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Not Completed Recently:"/>
+
+    <ListView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/notCompleted"
+        android:paddingTop="320dp"
+        android:paddingRight="120dp"
+        />
 </RelativeLayout>
