@@ -1,5 +1,7 @@
 Welcome to joeymich-HabitTracker!
-
+Name: Joey-Michael Fallone
+CCID: joeymich
+VIDEO URL: https://youtu.be/zV9Yzjt8H7I
 Usage is quite simple. 
 
 Front Page (MainHabitActivity):
