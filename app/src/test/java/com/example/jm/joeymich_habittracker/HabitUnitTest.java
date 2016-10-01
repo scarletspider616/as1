@@ -4,6 +4,7 @@ import org.junit.Test;
 
 import java.util.Date;
 
+import static junit.framework.Assert.assertTrue;
 import static org.junit.Assert.assertEquals;
 
 /**
@@ -43,8 +44,28 @@ public class HabitUnitTest {
         habit.deleteCompletion(0);
         assertEquals(Integer.valueOf(1), habit.getNumberOfCompletes());
     }
-//    @Test
-//    public void
+    @Test
+    public void testDateEntered() {
+        Habit habit = new Habit("Test", 0);
+
+    }
+    @Test
+    public void testDaysToCompleteOn() {
+        Habit habit = new Habit("Test", 0, 1, 2, 3);
+        Boolean [] expected = {true, true, true, true, false, false, false};
+        assertEquals(habit.getDaysToCompleteOnList(), expected);
+    }
+    @Test
+    public void testDayToCompleteOn() {
+        Habit habit = new Habit("Test", 3);
+        assertTrue(habit.toBeCompletedOn(3));
+    }
+    @Test
+    public void testCompletedRecently() {
+        Habit habit = new Habit("test", 3);
+        habit.addCompletion(new Date());
+        assertTrue(habit.completedRecently(new Date()));
+    }
 
 
 }
