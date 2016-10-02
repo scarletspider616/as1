@@ -2,34 +2,21 @@ package com.example.jm.joeymich_habittracker;
 
 import android.content.Context;
 
-import android.content.Context;
-import android.util.Log;
-
 import com.google.gson.Gson;
 
 import java.io.BufferedWriter;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.io.BufferedReader;
 
-import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
-import java.io.FileOutputStream;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.OutputStream;
-import java.util.ArrayList;
+
 import java.util.Date;
-import java.util.Scanner;
 
 
 /**
@@ -39,63 +26,18 @@ import java.util.Scanner;
 public class FileManager {
     private String filename = "save.dat";
     private ArrayList<Habit> habitList;
-    private Gson converter;
     private FileOutputStream outputStream;
     private Context context;
-    private String posFilename = "pos.dat";
-    private Integer pos = null;
 
     public FileManager(Context cntxt) {
         habitList = new ArrayList<Habit>();
-        converter = new Gson();
         this.context = cntxt;
 
         // must load from file & rewrite
         loadFromFile();
     }
 
-//    private void loadFromFile() {
-//        /**
-//            * This work, "loadFromFile," is a derivative of examples from
-//            * "Saving Files" by "Delpes," used under Apache 2.0 by Joey-Michael Fallone.
-//            * (Available here:
-//            * https://developer.android.com/training/basics/data-storage/files.html)
-//            *
-//        */
-//
-//        try {
-//            InputStream inRead = this.context.openFileInput(filename);
-//            this.dumpData(inRead);
-//            inRead.close();
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
-//
-//    }
 
-    private void dumpData(InputStream inData) {
-        /**
-         * This common knowledge process is attributed to lonelyTwitter.
-         *
-         */
-        ArrayList<String> strings = new ArrayList<String>();
-        BufferedReader inBuff = new BufferedReader(new InputStreamReader(inData));
-        try {
-            String line = inBuff.readLine();
-            while (line != null) {
-                strings.add(line);
-                line = inBuff.readLine();
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-
-        // now update habitList
-        for (String string : strings) {
-            this.habitList.add(converter.fromJson(string, Habit.class));
-        }
-    }
 
     public void addHabit(Habit habit) {
         this.habitList.add(habit);
